@@ -15,5 +15,5 @@
 - **Axios** - HTTP requests
 - **jQuery** - DOM manipulation
 
-#####API
+##### API
     [Universities API](universities.hipolabs.com)
