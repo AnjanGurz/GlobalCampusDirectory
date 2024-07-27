@@ -14,6 +14,6 @@
 - **JavaScript** - User interaction and API calls
 - **Axios** - HTTP requests
 - **jQuery** - DOM manipulation
-- 
+
 #####API
     [Universities API](universities.hipolabs.com)
