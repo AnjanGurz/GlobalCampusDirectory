@@ -2,14 +2,13 @@
 let $ = (selector) => document.querySelector(selector);
 
 let btn = $("#btnSearch");
-let countryName;
-let provinceName;
+let countryInput = $("#CountryInputBox");
+let stateInput = $("#stateInputBox");
 
 // Event listener for button click
 btn.addEventListener("click", async () => {
-  countryName = "india";
-  provinceName = `${$("#stateInputBox").value}`;
-  stateName = provinceName.trim().toLowerCase();
+  let countryName = countryInput.value.trim().toLowerCase();
+  let stateName = stateInput.value.trim().toLowerCase();
   console.log(countryName);
   console.log(stateName);
 
@@ -25,8 +24,8 @@ btn.addEventListener("click", async () => {
 
 // Clear input fields on page load
 window.addEventListener("load", () => {
-  $("#CountryInputBox").value = "";
-  $("#stateInputBox").value = "";
+  countryInput.value = "";
+  stateInput.value = "";
 });
 
 // Function to get colleges from API
@@ -36,38 +35,39 @@ async function getColleges(country, stateName) {
     let res = await axios.get(url);
     return res.data;
   } catch (error) {
-    console.error("Error fetching colleges:", error);
+    console.error("Error fetching colleges from getColleges:", error);
+    $("#resultList").textContent = "Error fetching colleges from getColleges";
     throw error; // Re-throw the error to be caught by the calling code
   }
 }
 
 // Function to display colleges
 function show(colArr, provName) {
-    let list = $("#resultList");
-  
-    list.innerText = ""; // Clear previous results
-  
-    let resultsFound = false;
-  
-    // Display each result
-    for (let college of colArr) {
-      let stateProvince = college["state-province"].trim().toLowerCase();
-      console.log(stateProvince);
-  
-      if (stateProvince === provName) {
-        let li = document.createElement("li");
-  
-        // Uses college.name if it exists and is not falsy
-        // If college.name is falsy (undefined, null, empty string, etc.), use 'No name available' as a fallback
-        li.innerText = college.name || "No name available";
-  
-        list.appendChild(li);
-        console.log(college);
-        resultsFound = true;
-      }
-    }
-  
-    if (!resultsFound) {
-      list.textContent = "No results found.";
+  let list = $("#resultList");
+
+  list.textContent = ""; // Clear previous results
+
+  let resultsFound = false;
+
+  // Display each result
+  for (let college of colArr) {
+    let stateProvince = (college["state-province"] || "").trim().toLowerCase();
+    console.log(stateProvince);
+
+    if (provName === stateProvince ) {
+      let li = document.createElement("li");
+
+      // Uses college.name if it exists and is not falsy
+      // If college.name is falsy (undefined, null, empty string, etc.), use 'No name available' as a fallback
+      li.textContent = college.name || "No name available";
+
+      list.appendChild(li);
+      console.log(college);
+      resultsFound = true;
     }
   }
+
+  if (!resultsFound) {
+    list.textContent = "No results found.";
+  }
+}
