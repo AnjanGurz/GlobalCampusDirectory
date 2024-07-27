@@ -16,4 +16,4 @@
 - **jQuery** - DOM manipulation
 
 ##### API
-    [Universities API](universities.hipolabs.com)
+[Universities API](universities.hipolabs.com)
