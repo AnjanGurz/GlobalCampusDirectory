@@ -1,6 +1,6 @@
 # GlobalCampusDirectory
 
-**GlobalCampusDirectory** is a web application to find colleges worldwide based on country and state/province.
+**GlobalCampusDirectory** is a simple web application to find colleges worldwide based on country and state/province.
 
 ## Features
 
