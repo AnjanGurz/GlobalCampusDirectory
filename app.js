@@ -7,19 +7,27 @@ let stateInput = $("#stateInputBox");
 
 // Event listener for button click
 btn.addEventListener("click", async () => {
-  let countryName = countryInput.value.trim().toLowerCase();
-  let stateName = stateInput.value.trim().toLowerCase();
-  console.log(countryName);
-  console.log(stateName);
 
-  try {
-    let colleges = await getColleges(countryName, stateName);
-    console.log(colleges);
-    show(colleges, stateName);
-  } catch (error) {
-    console.error("Error fetching colleges:", error);
-    $("#resultList").textContent = "An error occurred while fetching data.";
-  }
+    let countryName = countryInput.value.trim().toLowerCase();
+    let stateName = stateInput.value.trim().toLowerCase();
+    console.log(countryName);
+    console.log(stateName);
+    
+    // input validation
+    if (countryName === '' || stateName === '') {       
+        window.alert('Input field required!');
+    } 
+    else {
+        try {            
+            let colleges = await getColleges(countryName, stateName);
+            console.log(colleges);
+            show(colleges, stateName);
+            } 
+        catch (error) {
+            console.error("Error fetching colleges:", error);
+            $("#resultList").textContent = error;
+            }
+    }
 });
 
 // Clear input fields on page load
@@ -54,13 +62,9 @@ function show(colArr, provName) {
     let stateProvince = (college["state-province"] || "").trim().toLowerCase();
     console.log(stateProvince);
 
-    if (provName === stateProvince ) {
+    if (provName === stateProvince) {
       let li = document.createElement("li");
-
-      // Uses college.name if it exists and is not falsy
-      // If college.name is falsy (undefined, null, empty string, etc.), use 'No name available' as a fallback
       li.textContent = college.name || "No name available";
-
       list.appendChild(li);
       console.log(college);
       resultsFound = true;
