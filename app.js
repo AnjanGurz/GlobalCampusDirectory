@@ -1,5 +1,5 @@
 // Shorthand function for document.querySelector
-let $ = (selector) => document.querySelector(selector);
+let $ = selector => document.querySelector(selector);
 
 let btn = $("#btnSearch");
 let countryInput = $("#CountryInputBox");
